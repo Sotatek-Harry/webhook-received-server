@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: mongo
+    ports:
+      - 27027:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+
+  webserver:
+    build: .
+    container_name: webserver
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "9027:8000"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
